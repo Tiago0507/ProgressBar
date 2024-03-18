@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="tailwind.css" />
+    <title>Progress Bar</title>
+    <style>
+      .progress-bar {
+        transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+      }
+    </style>
+  </head>
+  <body class="bg-white flex justify-center items-center h-screen">
+    <div
+      id="progressContainer"
+      class="bg-green-500 h-10 rounded-full w-96 flex"
+    >
+      <div
+        id="progressBar"
+        class="bg-red-500 w-[25%] rounded-full h-full text-xs flex justify-center items-center text-white font-bold p-4"
+      >
+        25%
+      </div>
+    </div>
+
+    <script>
+      // Función para actualizar la barra de progreso
+      function updateProgressBar(progress, state) {
+        const progressBar = document.getElementById("progressBar");
+        progressBar.style.width = progress + "%";
+
+        // Cambiar de color de acuerdo al progreso
+        if (progress <= 25) {
+          progressBar.style.backgroundColor = "red";
+        } else if (progress <= 50) {
+          progressBar.style.backgroundColor = "orange";
+        } else if (progress <= 75) {
+          progressBar.style.backgroundColor = "yellow";
+        } else {
+          progressBar.style.backgroundColor = "green";
+        }
+
+        // Actualizar el texto dentro de la barra de progreso
+        progressBar.innerText = progress + "%";
+      }
+
+      // Lógica para simular el progreso de la solicitud
+      let currentProgress = 25;
+      let currentState = "Por validar";
+
+      setInterval(() => {
+        if (currentProgress === 25) {
+          currentProgress = 50;
+          currentState = "En revisión";
+        } else if (currentProgress === 50) {
+          currentProgress = 75;
+          currentState = "Datos faltantes";
+        } else if (currentProgress === 75) {
+          currentProgress = 100;
+          currentState = "Contrato cancelado";
+        } else if (currentProgress === 100) {
+          // Reiniciar la barra de progreso
+          currentProgress = 25;
+          currentState = "Por validar";
+        }
+
+        // Actualizar la barra de progreso
+        updateProgressBar(currentProgress, currentState);
+      }, 2000); // Intervalo de actualización (2 segundos)
+    </script>
+  </body>
+</html>
